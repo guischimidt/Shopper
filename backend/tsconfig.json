@@ -1,8 +1,8 @@
 {
     "compilerOptions": {
-        "outDir": "./dist",
+        "outDir": "dist",
         "module": "commonjs",
-        "target": "es2019",
+        "target": "ESNext",
         "esModuleInterop": true,
         "allowJs": true,
         "strictNullChecks": false,
