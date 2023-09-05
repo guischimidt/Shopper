@@ -8,8 +8,5 @@
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/prefer-nullish-coalescing": "off"
 
-    },
-    "parserOptions": {
-        "project": "./backend/tsconfig.json"
     }
 }
