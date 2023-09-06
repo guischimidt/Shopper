@@ -18,7 +18,7 @@ class UploadController {
 
     try {
       const csvData = await CsvParserService.parseCsv(req.file.buffer)
-      const validationErrors = CsvValidationUseCase.validateCsvRows(csvData)
+      const validationErrors = await CsvValidationUseCase.validateCsvRows(csvData)
 
       if (validationErrors.length > 0) {
         res.status(400).json({ errors: validationErrors })
