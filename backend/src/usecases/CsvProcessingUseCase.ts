@@ -21,6 +21,8 @@ class CsvProcessingUseCase {
     const processedData = rows.map((row) => {
       const errors: string[] = []
       const product = products.find((p) => p.code === Number(row.product_code))
+      const percentageThreshold = 0.1
+      const priceDifference = Math.abs(row.new_price - product.sales_price)
 
       if (!row.product_code || !row.new_price) {
         errors.push('Código ou preço não informados')
@@ -30,6 +32,8 @@ class CsvProcessingUseCase {
         errors.push('Produto não encontrado')
       } else if (row.new_price < product.cost_price) {
         errors.push('O novo preço não pode ser menor que o preço de custo')
+      } else if (priceDifference / product.sales_price > percentageThreshold) {
+        errors.push('O novo preço deve ser no máximo 10% maior ou menor que o preço de venda atual')
       }
 
       return {
