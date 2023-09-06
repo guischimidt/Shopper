@@ -4,7 +4,8 @@ interface CsvRow {
 }
 
 class CsvProcessingUseCase {
-  processCsv (rows: CsvRow[]): void {
+  processCsv (rows: CsvRow[]): CsvRow[] {
+    return rows
   }
 }
 
