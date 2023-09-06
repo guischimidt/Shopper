@@ -1,5 +1,7 @@
 import { type Request, type Response } from 'express'
 import CsvParserService from '../services/CsvParserService'
+import CsvValidationUseCase from '../usecases/CsvValidationUseCase'
+import CsvProcessingUseCase from '../usecases/CsvProcessingUseCase'
 
 interface MulterRequest extends Request {
   file: {
@@ -8,17 +10,27 @@ interface MulterRequest extends Request {
 }
 
 class UploadController {
-  async uploadCsv (req: MulterRequest, res: Response): Promise<Response> {
+  async uploadCsv (req: MulterRequest, res: Response): Promise<void> {
     if (!req.file) {
-      return res.status(400).json({ error: 'Nenhum arquivo CSV enviado.' })
+      res.status(400).json({ error: 'Nenhum arquivo CSV enviado.' })
+      return
     }
 
     try {
       const csvData = await CsvParserService.parseCsv(req.file.buffer)
-      return res.status(200).json(csvData)
+      const validationErrors = CsvValidationUseCase.validateCsvRows(csvData)
+
+      if (validationErrors.length > 0) {
+        res.status(400).json({ errors: validationErrors })
+        return
+      }
+
+      CsvProcessingUseCase.processCsv(csvData)
+
+      res.status(200).json({ message: 'Arquivo CSV processado com sucesso.' })
     } catch (error) {
       console.error('Erro ao processar o arquivo CSV:', error)
-      return res.status(500).json({ error: 'Erro ao processar o arquivo CSV.' })
+      res.status(500).json({ error: 'Erro ao processar o arquivo CSV.' })
     }
   }
 }
