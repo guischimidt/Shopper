@@ -1,4 +1,3 @@
-// PriceUpdateController.ts
 import { type Request, type Response } from 'express'
 import PriceUpdateUseCase from '../usecases/PriceUpdateUseCase'
 
