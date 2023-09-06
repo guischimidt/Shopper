@@ -1,5 +1,5 @@
 import express from 'express'
-import uploadRoutes from './routes/uploadRoutes'
+import routes from './routes/routes'
 
 class App {
   public express: express.Application
@@ -15,7 +15,7 @@ class App {
   }
 
   private routes (): void {
-    this.express.use('/api', uploadRoutes)
+    this.express.use('/api', routes)
   }
 }
 

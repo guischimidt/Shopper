@@ -11,20 +11,16 @@ class ProductRepository {
     }
   }
 
-  async updateByCode (code: number, productData: {
-    name: string
-    cost_price: number
-    sales_price: number
-  }): Promise<[number, Product[]]> {
+  async update (product: Product): Promise<void> {
     try {
-      const [rowsUpdated, [updatedProduct]] = await Product.update(productData, {
-        where: {
-          code
+      await Product.update(
+        {
+          sales_price: product.sales_price
         },
-        returning: true
-      })
-
-      return [rowsUpdated, [updatedProduct]]
+        {
+          where: { code: product.code }
+        }
+      )
     } catch (error) {
       throw new Error(`Erro ao atualizar produto por código: ${error.message}`)
     }
