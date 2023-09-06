@@ -15,6 +15,10 @@ class CsvValidationUseCase {
       if (!row.product_code || !row.new_price) {
         errors.push(`Erro na linha ${i + 1}: Necessário preencher todos os dados.`)
       }
+      // Validação do formato do new_price
+      if (!/^\d+\.\d{2}$/.test(row.new_price)) {
+        errors.push(`Erro na linha ${i + 1}: O novo preço deve ser númerico e estar no padrão correto`)
+      }
     }
 
     // Validação se o código existe no BD
