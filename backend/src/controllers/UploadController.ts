@@ -25,9 +25,9 @@ class UploadController {
         return
       }
 
-      const processedData = CsvProcessingUseCase.processCsv(csvData)
+      const processedData = await CsvProcessingUseCase.processCsv(csvData)
 
-      res.status(200).json({ message: 'Arquivo CSV processado com sucesso.', processedData })
+      res.status(200).json({ message: 'Arquivo CSV processado com sucesso.', data: processedData })
     } catch (error) {
       console.error('Erro ao processar o arquivo CSV:', error)
       res.status(500).json({ error: 'Erro ao processar o arquivo CSV.' })
