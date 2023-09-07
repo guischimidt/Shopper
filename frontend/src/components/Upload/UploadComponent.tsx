@@ -1,19 +1,31 @@
 import { useState, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import UploadCSVUseCase from '../../domain/use-cases/UploadCSVUseCase';
 
 interface UploadComponentProps {
-    onFileUpload: (file: File) => void;
+    uploadCSVUseCase: UploadCSVUseCase;
 }
 
-function UploadComponent({ onFileUpload }: UploadComponentProps) {
+function UploadComponent(props: UploadComponentProps) {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
         setSelectedFile(file);
-        if (file) {
-            onFileUpload(file);
+    };
+
+    const handleUploadClick = async () => {
+        if (selectedFile) {
+            try {
+                await props.uploadCSVUseCase.execute(selectedFile);
+
+                setSelectedFile(null);
+
+                console.log('Arquivo enviado com sucesso!');
+            } catch (error) {
+                console.error('Erro ao enviar o arquivo para a API:', error);
+            }
         }
     };
 
@@ -39,6 +51,13 @@ function UploadComponent({ onFileUpload }: UploadComponentProps) {
             {selectedFile && (
                 <div>
                     <p>Arquivo selecionado: {selectedFile.name}</p>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleUploadClick}
+                    >
+                        Enviar
+                    </Button>
                 </div>
             )}
         </div>
