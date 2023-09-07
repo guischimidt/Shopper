@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -6,7 +6,7 @@ interface UploadComponentProps {
     onFileUpload: (file: File) => void;
 }
 
-const UploadComponent: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
+function UploadComponent({ onFileUpload }: UploadComponentProps) {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +43,6 @@ const UploadComponent: React.FC<UploadComponentProps> = ({ onFileUpload }) => {
             )}
         </div>
     );
-};
+}
 
 export default UploadComponent;

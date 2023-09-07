@@ -1,12 +1,11 @@
-import React from 'react';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import UploadComponent from '../../components/Upload/UploadComponent';
 
-const UploadPage: React.FC = () => {
+function UploadPage() {
     const handleFileUpload = (file: File) => {
-        // Implemente a lógica de processamento do arquivo CSV aqui
+
         console.log('Arquivo CSV carregado:', file.name);
     };
 
@@ -27,6 +26,6 @@ const UploadPage: React.FC = () => {
             </Box>
         </Container>
     );
-};
+}
 
 export default UploadPage;
