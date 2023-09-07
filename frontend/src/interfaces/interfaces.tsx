@@ -6,6 +6,11 @@ export interface DataItem {
     errors: string[];
 }
 
+export interface UpdateItem {
+    code: number;
+    new_price: string;
+}
+
 export interface ApiResponse {
     message: string;
     processedData: DataItem[];

@@ -5,13 +5,17 @@ import Box from '@mui/material/Box';
 import UploadComponent from '../components/UploadComponent';
 import DataTable from '../components/DataTable';
 import UploadCSVUseCase from '../domain/use-cases/UploadCSVUseCase';
+import UpdatePricesUseCase from '../domain/use-cases/UpdatePricesUseCase';
 import CSVRepository from '../domain/repositories/CSVRepository';
-import { DataItem } from '../interfaces/interfaces';
+import { DataItem, UpdateItem } from '../interfaces/interfaces';
 import Button from '@mui/material/Button';
 
 function UploadPage() {
     const [apiData, setApiData] = useState<DataItem[]>([]);
     const [fileUploaded, setFileUploaded] = useState(false);
+    const [updateData, setUpdateData] = useState<UpdateItem[]>([]);
+
+    console.log(updateData);
 
     const handleFileUpload = async (file: File) => {
         try {
@@ -23,6 +27,26 @@ function UploadPage() {
 
             setApiData(data.processedData);
             setFileUploaded(true);
+
+            const updateDataArray = data.processedData.map((item) => ({
+                code: item.code,
+                new_price: item.new_price,
+            }));
+            setUpdateData(updateDataArray);
+        } catch (error) {
+            console.error('Erro ao enviar o arquivo para a API:', error);
+        }
+    };
+
+    const handleUpdatePrices = async () => {
+        try {
+            const csvRepository = new CSVRepository();
+
+            const useCase = new UpdatePricesUseCase(csvRepository);
+
+            const data = await useCase.execute(updateData);
+            return data;
+
         } catch (error) {
             console.error('Erro ao enviar o arquivo para a API:', error);
         }
@@ -49,10 +73,7 @@ function UploadPage() {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={() => {
-                            // Coloque aqui a lógica para atualizar os dados
-                            // Esta função será chamada apenas se não houver erros e um arquivo foi enviado
-                        }}
+                        onClick={handleUpdatePrices}
                     >
                         Atualizar
                     </Button>

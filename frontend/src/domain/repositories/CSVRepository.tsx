@@ -1,5 +1,5 @@
 import apiService from '../../infrastructure/api/ApiService';
-import { ApiResponse } from '../../interfaces/interfaces';
+import { ApiResponse, UpdateItem } from '../../interfaces/interfaces';
 
 class CSVRepository {
     async uploadCSVFile(file: File): Promise<ApiResponse> {
@@ -15,6 +15,18 @@ class CSVRepository {
             };
 
             return apiResponse;
+        } catch (error) {
+            console.error('Erro ao enviar o arquivo para a API:', error);
+            throw error;
+        }
+    }
+
+    async updatePrices(data: UpdateItem[]): Promise<ApiResponse> {
+        try {
+
+            const response = await apiService.updatePrices(data);
+
+            return response;
         } catch (error) {
             console.error('Erro ao enviar o arquivo para a API:', error);
             throw error;
