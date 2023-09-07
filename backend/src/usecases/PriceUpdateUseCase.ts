@@ -2,15 +2,16 @@ import ProductRepository from '../repositories/ProductRepository'
 import PackRepository from '../repositories/PackRepository'
 
 interface PriceUpdateRow {
-  product_code: number
+  code: number
   new_price: number
 }
 
 class PriceUpdateUseCase {
   async updatePrices (data: PriceUpdateRow[]): Promise<{ message: string }> {
+    console.log(data)
     try {
       for (const item of data) {
-        const product = await ProductRepository.findByCode(item.product_code)
+        const product = await ProductRepository.findByCode(item.code)
 
         if (product) {
           // Verifique se o produto é um pacote (pack)
@@ -28,7 +29,7 @@ class PriceUpdateUseCase {
 
           const productInPack = await PackRepository.findProductInPack(product.code)
 
-          if (productInPack) {
+          if (productInPack.length > 0) {
             const productPack = await ProductRepository.findByCode(productInPack[0].pack_id)
 
             const priceDifference = (item.new_price - product.sales_price) * productInPack[0].qty
