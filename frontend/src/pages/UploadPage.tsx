@@ -38,8 +38,7 @@ function UploadPage() {
                 Upload de Arquivo CSV
             </Typography>
             <UploadComponent onFileUpload={handleFileUpload} />
-            {/* {apiData.length > 0 && <DataTable data={apiData} />} */}
-            <DataTable data={apiData} />
+            {apiData.length > 0 && <DataTable data={apiData} />}
         </Box>
     </Container>
     );

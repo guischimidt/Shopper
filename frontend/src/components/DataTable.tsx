@@ -5,42 +5,67 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Button from '@mui/material/Button';
 import { DataItem } from '../interfaces/interfaces';
+import { useState, useEffect } from 'react';
 
 interface DataTableProps {
     data: DataItem[];
 }
 
 function DataTable({ data }: DataTableProps) {
+    const [hasErrors, setHasErrors] = useState(false);
+
+    useEffect(() => {
+        const hasErrorsInData = data.some(item => item.errors.length > 0);
+        setHasErrors(hasErrorsInData);
+    }, [data]);
+
     return (
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Código</TableCell>
-                        <TableCell>Nome</TableCell>
-                        <TableCell>Preço Atual</TableCell>
-                        <TableCell>Novo Preço</TableCell>
-                        <TableCell>Erros</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.map((item, index) => (
-                        <TableRow key={index}>
-                            <TableCell>{item.code}</TableCell>
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.sales_price}</TableCell>
-                            <TableCell>{item.new_price}</TableCell>
-                            <TableCell>
-                                {item.errors.map((error: string, errorIndex: number) => (
-                                    <div key={errorIndex}>{error}</div>
-                                ))}
-                            </TableCell>
+        <div>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Código</TableCell>
+                            <TableCell>Nome</TableCell>
+                            <TableCell>Preço Atual</TableCell>
+                            <TableCell>Novo Preço</TableCell>
+                            <TableCell>Erros</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {data.map((item, index) => (
+                            <TableRow key={index}>
+                                <TableCell>{item.code}</TableCell>
+                                <TableCell>{item.name}</TableCell>
+                                <TableCell>{item.sales_price}</TableCell>
+                                <TableCell>{item.new_price}</TableCell>
+                                <TableCell>
+                                    {item.errors.map((error: string, errorIndex: number) => (
+                                        <div key={errorIndex}>{error}</div>
+                                    ))}
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            {
+                hasErrors && (
+                    <Button variant="contained" color="primary" disabled>
+                        Atualizar
+                    </Button>
+                )
+            }
+            {
+                !hasErrors && (
+                    <Button variant="contained" color="primary">
+                        Atualizar
+                    </Button>
+                )
+            }
+        </div>
     );
 }
 
