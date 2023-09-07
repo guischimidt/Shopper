@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import UploadPage from './pages/Upload/UploadPage';
+import UploadPage from './pages/UploadPage';
 
 function App() {
 
