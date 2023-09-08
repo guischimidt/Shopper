@@ -25,6 +25,7 @@ class PriceUpdateUseCase {
         const productIsPack = await PackRepository.findByPackId(product.code)
 
         if (productIsPack.length === 1) {
+          // Atualizar preço do componente
           const newIndividualPrice = item.new_price / productIsPack[0].qty
 
           const productPack = await ProductRepository.findByCode(productIsPack[0].product_id)
@@ -32,6 +33,8 @@ class PriceUpdateUseCase {
           productPack.sales_price = newIndividualPrice
 
           await ProductRepository.update(productPack)
+
+          product.cost_price = productPack.cost_price * productIsPack[0].qty
         }
 
         const productInPack = await PackRepository.findProductInPack(product.code)
@@ -46,6 +49,7 @@ class PriceUpdateUseCase {
         }
 
         product.sales_price = item.new_price
+        console.log(product)
         await ProductRepository.update(product)
       }
     }

@@ -14,7 +14,10 @@ class ProductRepository {
   async update (product: Product): Promise<void> {
     try {
       await Product.update(
-        { sales_price: product.sales_price },
+        {
+          sales_price: product.sales_price,
+          cost_price: product.cost_price
+        },
         { where: { code: product.code } }
       )
     } catch (error) {
