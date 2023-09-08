@@ -41,7 +41,7 @@ function UploadComponent({ onFileUpload }: UploadComponentProps) {
                     sx={{ m: 2, '@media (max-width: 600px)': { m: 1 } }}
                     startIcon={<CloudUploadIcon />}
                 >
-                    Upload CSV
+                    Validar
                 </Button>
             </label>
         </div>

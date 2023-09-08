@@ -88,8 +88,11 @@ function UploadPage() {
                     mt: 4,
                 }}
             >
-                <Typography variant="h4" component="h1" gutterBottom>
-                    Upload de Arquivo CSV
+                <Typography variant="h5" component="h1" gutterBottom>
+                    Atualização de Preços em Massa
+                </Typography>
+                <Typography variant="subtitle2" component="h2" gutterBottom>
+                    Clique em "Validar" para selecionar um arquivo CSV e fazer sua validação.
                 </Typography>
                 <UploadComponent onFileUpload={handleFileUpload} />
                 {apiData.length > 0 && <DataTable data={apiData} />}
@@ -98,6 +101,7 @@ function UploadPage() {
                         variant="contained"
                         color="primary"
                         onClick={handleUpdatePrices}
+                        sx={{ m: 2 }}
                     >
                         Atualizar
                     </Button>
