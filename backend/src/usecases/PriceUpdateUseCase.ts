@@ -21,6 +21,16 @@ class PriceUpdateUseCase {
       if (!product) {
         throw new NotFoundError('Produto não encontrado')
       } else {
+        if (item.new_price < product.cost_price) {
+          throw new ValidationError('Novo preço menor que o custo')
+        }
+
+        const percentageThreshold = 0.1
+        const priceDifference = Math.abs(Number(item.new_price) - Number(product.sales_price))
+
+        if (Number(priceDifference) / Number(product.sales_price) > percentageThreshold) {
+          throw new ValidationError('Reajuste maior que 10%')
+        }
         // Verifique se o produto é um pacote (pack)
         const productIsPack = await PackRepository.findByPackId(product.code)
 
