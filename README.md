@@ -77,7 +77,7 @@ $ npm install
 Crie um arquivo na raiz da pasta com o nome .env e defina as seguintes variáveis:
 
 ```bash
-REACT_APP_API_BASE_URL=Caminho base da sua api
+VITE_API_URL=Caminho base da sua api
 ```
 Por fim, realize a build para subir seu Front-end
 ```bash
