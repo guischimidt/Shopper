@@ -1,5 +1,5 @@
 import express from 'express'
-import routes from './routes/routes'
+import routes from './routes'
 import { BodyParser, Cors, ContentType } from './middlewares'
 
 class App {
