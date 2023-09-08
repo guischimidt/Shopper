@@ -1,7 +1,7 @@
 import apiService from '../../infrastructure/api/ApiService';
 import { ApiResponse, UpdateItem } from '../../interfaces/interfaces';
 
-class CSVRepository {
+class Repository {
     async uploadCSVFile(file: File): Promise<ApiResponse> {
         try {
             const formData = new FormData();
@@ -34,4 +34,4 @@ class CSVRepository {
     }
 }
 
-export default CSVRepository;
+export default Repository;

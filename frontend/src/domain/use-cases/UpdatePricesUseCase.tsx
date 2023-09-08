@@ -1,16 +1,16 @@
-import CSVRepository from "../repositories/CSVRepository";
+import Repository from "../repositories/Repository";
 import { ApiResponse, UpdateItem } from "../../interfaces/interfaces";
 
 class UpdatePricesUseCase {
-    private csvRepository: CSVRepository;
+    private repository: Repository;
 
-    constructor(csvRepository: CSVRepository) {
-        this.csvRepository = csvRepository;
+    constructor(repository: Repository) {
+        this.repository = repository;
     }
 
     async execute(data: UpdateItem[]): Promise<ApiResponse> {
         try {
-            const response = await this.csvRepository.updatePrices(data);
+            const response = await this.repository.updatePrices(data);
             return response;
         } catch (error) {
             console.error('Erro ao atualizar os preços:', error);

@@ -4,7 +4,7 @@ import UploadComponent from '../components/UploadComponent';
 import DataTable from '../components/DataTable';
 import UploadCSVUseCase from '../domain/use-cases/UploadCSVUseCase';
 import UpdatePricesUseCase from '../domain/use-cases/UpdatePricesUseCase';
-import CSVRepository from '../domain/repositories/CSVRepository';
+import Repository from '../domain/repositories/Repository';
 import { DataItem, UpdateItem } from '../interfaces/interfaces';
 import Message from '../components/Message';
 
@@ -22,8 +22,8 @@ function UploadPage() {
 
     const handleFileUpload = async (file: File) => {
         try {
-            const csvRepository = new CSVRepository();
-            const useCase = new UploadCSVUseCase(csvRepository);
+            const repository = new Repository();
+            const useCase = new UploadCSVUseCase(repository);
             const data = await useCase.execute(file);
 
             setApiData(data.processedData);
@@ -48,8 +48,8 @@ function UploadPage() {
 
     const handleUpdatePrices = async () => {
         try {
-            const csvRepository = new CSVRepository();
-            const useCase = new UpdatePricesUseCase(csvRepository);
+            const repository = new Repository();
+            const useCase = new UpdatePricesUseCase(repository);
             const data = await useCase.execute(updateData);
 
             setMessage(data.message);
