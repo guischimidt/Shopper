@@ -1,10 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import { UpdateItem } from '../../interfaces/interfaces';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 class ApiService {
     async uploadCSVFile(formData: FormData): Promise<AxiosResponse<any>> {
         try {
-            const response = await axios.post('http://localhost:3000/api/upload-csv', formData, {
+            const response = await axios.post(`${API_BASE_URL}/api/upload-csv`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -19,7 +21,7 @@ class ApiService {
 
     async updatePrices(data: UpdateItem[]): Promise<any> {
         try {
-            const response = await axios.post('http://localhost:3000/api/update-prices', data);
+            const response = await axios.post(`${API_BASE_URL}/api/update-prices`, data);
             return response;
         } catch (error) {
             console.error('Erro ao atualizar os dados:', error);
