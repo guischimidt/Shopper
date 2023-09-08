@@ -14,12 +14,8 @@ class ProductRepository {
   async update (product: Product): Promise<void> {
     try {
       await Product.update(
-        {
-          sales_price: product.sales_price
-        },
-        {
-          where: { code: product.code }
-        }
+        { sales_price: product.sales_price },
+        { where: { code: product.code } }
       )
     } catch (error) {
       throw new Error(`Erro ao atualizar produto por código: ${error.message}`)
@@ -29,9 +25,7 @@ class ProductRepository {
   async findByCode (code: number): Promise<Product | null> {
     try {
       const product = await Product.findOne({
-        where: {
-          code
-        }
+        where: { code }
       })
 
       return product
@@ -43,11 +37,7 @@ class ProductRepository {
   async findByCodes (codes: string[]): Promise<Product[]> {
     try {
       const products = await Product.findAll({
-        where: {
-          code: {
-            [Op.in]: codes.map((code) => Number(code))
-          }
-        }
+        where: { code: { [Op.in]: codes.map((code) => Number(code)) } }
       })
 
       return products
