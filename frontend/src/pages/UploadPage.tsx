@@ -58,6 +58,8 @@ function UploadPage() {
             setMessage(data.message);
             setMessageType('success');
             setMessageOpen(true);
+            setApiData([]);
+            setFileUploaded(false);
 
             return data;
         } catch (error) {

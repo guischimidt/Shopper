@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -7,23 +7,27 @@ interface UploadComponentProps {
 }
 
 function UploadComponent({ onFileUpload }: UploadComponentProps) {
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [fileUpload, setFileUpload] = useState<File | null>(null);
+    const [inputKey, setInputKey] = useState(Date.now());
+
+    useEffect(() => {
+        if (fileUpload) {
+            onFileUpload(fileUpload);
+            setFileUpload(null);
+            setInputKey(Date.now());
+        }
+    }, [fileUpload]);
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
-        setSelectedFile(file);
-    };
 
-    const handleUploadClick = async () => {
-        if (selectedFile) {
-            onFileUpload(selectedFile);
-            setSelectedFile(null);
-        }
+        file ? setFileUpload(file) : "";
     };
 
     return (
         <div>
             <input
+                key={inputKey}
                 type="file"
                 accept=".csv"
                 onChange={handleFileChange}
@@ -40,18 +44,6 @@ function UploadComponent({ onFileUpload }: UploadComponentProps) {
                     Upload CSV
                 </Button>
             </label>
-            {selectedFile && (
-                <div>
-                    <p>Arquivo selecionado: {selectedFile.name}</p>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleUploadClick}
-                    >
-                        Enviar
-                    </Button>
-                </div>
-            )}
         </div>
     );
 }
