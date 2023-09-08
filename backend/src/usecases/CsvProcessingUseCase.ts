@@ -29,13 +29,13 @@ class CsvProcessingUseCase {
         errors.push('Produto não encontrado')
       } else {
         if (Number(row.new_price) < Number(product.cost_price)) {
-          errors.push('O novo preço não pode ser menor que o preço de custo')
+          errors.push('Novo preço menor que o custo')
         }
         const percentageThreshold = 0.1
         const priceDifference = Math.abs(Number(row.new_price) - Number(product.sales_price))
 
         if (Number(priceDifference) / Number(product.sales_price) > percentageThreshold) {
-          errors.push('O novo preço deve ser no máximo 10% maior ou menor que o preço de venda atual')
+          errors.push('Reajuste maior que 10%')
         }
       }
 
