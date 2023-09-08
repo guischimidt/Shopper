@@ -13,7 +13,7 @@ class UpdatePricesUseCase {
             const response = await this.csvRepository.updatePrices(data);
             return response;
         } catch (error) {
-            console.error('Erro ao enviar o arquivo para a API:', error);
+            console.error('Erro ao atualizar os preços:', error);
             throw error;
         }
     }

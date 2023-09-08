@@ -26,7 +26,7 @@ class CSVRepository {
 
             const response = await apiService.updatePrices(data);
 
-            return response;
+            return response.data;
         } catch (error) {
             console.error('Erro ao enviar o arquivo para a API:', error);
             throw error;

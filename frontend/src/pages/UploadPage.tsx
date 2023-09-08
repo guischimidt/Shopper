@@ -9,46 +9,62 @@ import UpdatePricesUseCase from '../domain/use-cases/UpdatePricesUseCase';
 import CSVRepository from '../domain/repositories/CSVRepository';
 import { DataItem, UpdateItem } from '../interfaces/interfaces';
 import Button from '@mui/material/Button';
+import Message from '../components/Message';
 
 function UploadPage() {
     const [apiData, setApiData] = useState<DataItem[]>([]);
     const [fileUploaded, setFileUploaded] = useState(false);
     const [updateData, setUpdateData] = useState<UpdateItem[]>([]);
+    const [message, setMessage] = useState<string>('');
+    const [messageType, setMessageType] = useState<'success' | 'error'>('success');
+    const [messageOpen, setMessageOpen] = useState(false);
 
-    console.log(updateData);
+    const handleCloseMessage = () => {
+        setMessageOpen(false);
+    };
 
     const handleFileUpload = async (file: File) => {
         try {
             const csvRepository = new CSVRepository();
-
             const useCase = new UploadCSVUseCase(csvRepository);
-
             const data = await useCase.execute(file);
 
             setApiData(data.processedData);
             setFileUploaded(true);
+            setMessage(data.message);
+            setMessageType('success');
+            setMessageOpen(true);
 
             const updateDataArray = data.processedData.map((item) => ({
                 code: item.code,
                 new_price: item.new_price,
             }));
+
             setUpdateData(updateDataArray);
         } catch (error) {
-            console.error('Erro ao enviar o arquivo para a API:', error);
+            setMessage(`Erro: ${error}`);
+            setMessageType('error');
+            setMessageOpen(true);
+            console.error('Erro ao enviar o arquivo:', error);
         }
     };
 
     const handleUpdatePrices = async () => {
         try {
             const csvRepository = new CSVRepository();
-
             const useCase = new UpdatePricesUseCase(csvRepository);
-
             const data = await useCase.execute(updateData);
-            return data;
 
+            setMessage(data.message);
+            setMessageType('success');
+            setMessageOpen(true);
+
+            return data;
         } catch (error) {
-            console.error('Erro ao enviar o arquivo para a API:', error);
+            setMessage(`Erro: ${error}`);
+            setMessageType('error');
+            setMessageOpen(true);
+            console.error('Erro ao atualizar os preços: ', error);
         }
     };
 
@@ -56,6 +72,12 @@ function UploadPage() {
 
     return (
         <Container>
+            <Message
+                type={messageType}
+                message={message}
+                open={messageOpen}
+                onClose={handleCloseMessage}
+            />
             <Box
                 sx={{
                     display: 'flex',
