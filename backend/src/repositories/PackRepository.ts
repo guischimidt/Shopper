@@ -1,32 +1,24 @@
 import Pack from '../models/PackModel'
 
 class PackRepository {
-  async findByPackId (pack_id: number): Promise<Pack[]> {
+  private async findPacksByFilter (filter: Record<string, any>): Promise<Pack[]> {
     try {
-      const pack = await Pack.findAll({
-        where: {
-          pack_id
-        }
+      const packs = await Pack.findAll({
+        where: filter
       })
 
-      return pack
+      return packs
     } catch (error) {
-      throw new Error(`Erro ao buscar pack por código: ${error.message}`)
+      throw new Error(`Erro ao buscar pack: ${error.message}`)
     }
   }
 
-  async findProductInPack (product_id: number): Promise<Pack[]> {
-    try {
-      const pack = await Pack.findAll({
-        where: {
-          product_id
-        }
-      })
+  async findByPackId (pack_id: number): Promise<Pack[]> {
+    return await this.findPacksByFilter({ pack_id })
+  }
 
-      return pack
-    } catch (error) {
-      throw new Error(`Erro ao buscar pack por código: ${error.message}`)
-    }
+  async findProductInPack (product_id: number): Promise<Pack[]> {
+    return await this.findPacksByFilter({ product_id })
   }
 }
 
