@@ -1,5 +1,5 @@
 import apiService from '../../infrastructure/api/ApiService';
-import { ApiResponse, UpdateItem } from '../../interfaces/interfaces';
+import { ApiResponse, UpdateItem } from '../../interfaces';
 
 class Repository {
     async uploadCSVFile(file: File): Promise<ApiResponse> {

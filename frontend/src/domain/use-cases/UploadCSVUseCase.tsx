@@ -1,5 +1,5 @@
 import Repository from "../repositories/Repository";
-import { ApiResponse } from "../../interfaces/interfaces";
+import { ApiResponse } from "../../interfaces";
 
 class UploadCSVUseCase {
     private repository: Repository;

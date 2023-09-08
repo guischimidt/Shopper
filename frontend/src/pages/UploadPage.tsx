@@ -5,7 +5,7 @@ import DataTable from '../components/DataTable';
 import UploadCSVUseCase from '../domain/use-cases/UploadCSVUseCase';
 import UpdatePricesUseCase from '../domain/use-cases/UpdatePricesUseCase';
 import Repository from '../domain/repositories/Repository';
-import { DataItem, UpdateItem } from '../interfaces/interfaces';
+import { DataItem, UpdateItem } from '../interfaces';
 import Message from '../components/Message';
 
 function UploadPage() {

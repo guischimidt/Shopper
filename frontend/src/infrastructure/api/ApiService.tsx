@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { UpdateItem } from '../../interfaces/interfaces';
+import { UpdateItem } from '../../interfaces';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 

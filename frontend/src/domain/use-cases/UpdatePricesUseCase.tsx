@@ -1,5 +1,5 @@
 import Repository from "../repositories/Repository";
-import { ApiResponse, UpdateItem } from "../../interfaces/interfaces";
+import { ApiResponse, UpdateItem } from "../../interfaces";
 
 class UpdatePricesUseCase {
     private repository: Repository;
