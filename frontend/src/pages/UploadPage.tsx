@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+import { Alert, Typography, Container, Box, Button } from '@mui/material';
 import UploadComponent from '../components/UploadComponent';
 import DataTable from '../components/DataTable';
 import UploadCSVUseCase from '../domain/use-cases/UploadCSVUseCase';
 import UpdatePricesUseCase from '../domain/use-cases/UpdatePricesUseCase';
 import CSVRepository from '../domain/repositories/CSVRepository';
 import { DataItem, UpdateItem } from '../interfaces/interfaces';
-import Button from '@mui/material/Button';
 import Message from '../components/Message';
 
 function UploadPage() {
@@ -95,6 +92,12 @@ function UploadPage() {
                     Clique em "Validar" para selecionar um arquivo CSV e fazer sua validação.
                 </Typography>
                 <UploadComponent onFileUpload={handleFileUpload} />
+                {hasErrors && (
+                    <Alert severity="warning">
+                        Corrija os erros abaixo e reenvie seu arquivo
+                    </Alert>
+                )
+                }
                 {apiData.length > 0 && <DataTable data={apiData} />}
                 {fileUploaded && !hasErrors && (
                     <Button
@@ -106,6 +109,7 @@ function UploadPage() {
                         Atualizar
                     </Button>
                 )}
+
             </Box>
         </Container>
     );
