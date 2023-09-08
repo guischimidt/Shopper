@@ -83,9 +83,3 @@ Por fim, realize a build para subir seu Front-end
 ```bash
 $ npm run build
 ```
-## :balance_scale: Licença
-Este projeto está licenciado sob a [licença MIT](LICENSE).
-
-## :email: Contato
-
-E-mail: [**guigoschimidt@gmail.com**](mailto:guigoschimidt@gmail.com)
